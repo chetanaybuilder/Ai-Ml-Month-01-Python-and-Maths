@@ -1,153 +1,120 @@
-# Day-02-Word-Frequency-Analyzer
-
-[![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)](https://python.org)
-[![AI & ML Month 1](https://img.shields.io/badge/AI%20%26%20ML-Month%2001-purple)](https://github.com/chetanaybuilder/Ai-Ml-Month-01-Python-and-Maths)
-[![Day 02](https://img.shields.io/badge/Day-02-green)](https://github.com/chetanaybuilder/Ai-Ml-Month-01-Python-and-Maths)
-
-A lightweight command-line Python utility that analyzes user-provided text and reports word frequencies, total word count, and unique word count. Built as part of the **AI & ML Month 1: Python and Maths** learning journey.
-
----
-
-## 📸 Project Preview
-
 <div align="center">
 
-### Input Prompt
-<img src="./screenshots/Screenshot1.png" alt="Text Analyzer Input Prompt" width="600"/>
+# Word Frequency Analyzer 📊
+
+> **A lightweight text-processing utility that normalizes a paragraph and reports word frequencies from the command line.**
+
+![Python](https://img.shields.io/badge/Python-3.6%2B-blue?style=flat-square&logo=python&logoColor=white)
+![Dependencies](https://img.shields.io/badge/Dependencies-Standard%20Library-success?style=flat-square)
+![Project](https://img.shields.io/badge/AI%20%26%20ML%20Month%2001-Day%2002-purple?style=flat-square)
 
 </div>
 
-<div align="center">
-
-### Analysis Output
-<img src="./screenshots/Screenshot2.png" alt="Text Analyzer Output" width="600"/>
-
-</div>
-
-<div align="center">
-
-### Course Banner
-<img src="./screenshots/banner.png" alt="AI & ML Month 1 Banner" width="600"/>
-
-</div>
-
-> 📁 Place your banner image as `screenshots/banner.png` to display the course header.
-
 ---
 
-## 🚀 Features
+## 🧭 Overview
 
-- ✅ Accepts a paragraph of text from the user
-- ✅ Strips punctuation automatically
-- ✅ Normalizes text to lowercase for uniform analysis
-- ✅ Tokenizes input into individual words
-- ✅ Counts frequency of each word
-- ✅ Displays total word count and unique word count
-- ✅ Clean terminal banner with section dividers
-- ✅ Zero external dependencies — pure Python standard library
+The Word Frequency Analyzer reads a paragraph from standard input, removes ASCII punctuation, converts the remaining text to lowercase, and splits it into words. It counts each word and displays the alphabetically sorted frequencies, total word count, and unique word count.
 
----
+The implementation is a single Python script and requires no third-party packages.
+
+## 🏗️ System Architecture
+
+```text
+[ Paragraph Input ]
+        │
+        ▼
+[ Text Normalization ] ──> Remove ASCII punctuation + convert to lowercase
+        │
+        ▼
+[ Tokenization ] ─────────> Split normalized text into words
+        │
+        ▼
+[ Frequency Counter ] ────> Accumulate counts in a dictionary
+        │
+        ▼
+[ Terminal Report ] ──────> Sorted frequencies + total and unique counts
+```
+
+The script processes the input in a single pass after normalization. A dictionary stores each distinct word and its count; the output is sorted by word for consistent reading.
 
 ## 📂 Project Structure
 
-```
+```text
 Day-02-Word-Frequency-Analyzer/
-├── text_analyzer.py   # Main analyzer script
-├── README.md          # Project documentation
-└── screenshots/       # Project preview images
-    ├── screenshot-1.png
-    ├── screenshot-2.png
-    └── banner.png
+├── text_analyzer.py       # Input processing and frequency report
+├── README.md              # Project documentation
+└── screenshots/
+    ├── Screenshot1.png    # Input prompt
+    ├── Screenshot2.png    # Analysis output
+    └── banner.png         # Course banner
 ```
 
----
-
-## ⚡ Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.x installed ([download here](https://python.org))
 
-### Run the Analyzer
+- Python 3.6 or newer
+- No third-party packages
+
+### Run
+
+From this directory, execute:
 
 ```bash
-# Clone the repository
-git clone https://github.com/chetanaybuilder/Ai-Ml-Month-01-Python-and-Maths.git
-
-# Navigate to the Day 02 project folder
-cd Ai-Ml-Month-01-Python-and-Maths/Day-02-Word-Frequency-Analyzer
-
-# Run the script
 python text_analyzer.py
 ```
 
-### Example Session
+Enter a paragraph when prompted. On Windows, `py text_analyzer.py` is also supported when the Python launcher is installed.
 
-```text
-Enter your paragraph: Python is powerful. Python is useful. Python is powerful.
+## 💻 Core Implementation
 
-==================================================
-                  TEXT ANALYZER                  
-==================================================
+```python
+text = text.translate(str.maketrans("", "", string.punctuation))
+text = text.lower()
+words = text.split()
 
-Word Frequencies
---------------------------------------------------
-python: 3
-is: 3
-powerful: 2
-useful: 1
---------------------------------------------------
-Total words: 7
-Unique words: 4
-==================================================
+frequency = {}
+for word in words:
+    frequency[word] = frequency.get(word, 0) + 1
+
+for word, count in sorted(frequency.items()):
+    print(f"{word}: {count}")
+
+print(f"Total words: {len(words)}")
+print(f"Unique words: {len(frequency)}")
 ```
 
----
+For example, `Python is powerful. Python is useful. Python is powerful.` produces 9 total words and 4 unique words.
 
-## 🛠️ How It Works
+## 💡 Engineering Takeaways
 
-1. **Input Capture** — Reads a paragraph from the user via `input()`.
-2. **Cleaning** — Removes all punctuation using `string.punctuation` and converts text to lowercase.
-3. **Tokenization** — Splits the cleaned text into individual words.
-4. **Frequency Counting** — Uses a dictionary to tally occurrences of each word.
-5. **Reporting** — Prints sorted word frequencies, total count, and unique count inside a styled terminal banner.
+- **Normalization:** Apply consistent casing and remove punctuation before counting.
+- **Tokenization:** Use whitespace splitting to create a sequence of words.
+- **Dictionary accumulation:** Use `dict.get()` to initialize and increment counts in one operation.
+- **Deterministic reporting:** Sort dictionary items so frequency output appears in alphabetical order.
+- **Standard-library design:** Use Python's built-in `string` module and data structures without external dependencies.
 
----
+## 🖼️ Screenshots
 
-## 📜 Requirements
-
-| Requirement | Version |
-|-------------|---------|
-| Python      | 3.x     |
-| External libs | None (standard library only) |
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests to improve the analyzer.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/improvement`)
-3. Commit your changes (`git commit -m 'Add some improvement'`)
-4. Push to the branch (`git push origin feature/improvement`)
-5. Open a Pull Request
-
----
-
-## 👨‍💻 Author
-
-**Chetanay Builder** — Future Founder  
-AI & ML Enthusiast | Python Developer  
-GitHub: [@chetanaybuilder](https://github.com/chetanaybuilder)
-
----
-
-## 📄 License
-
-This project is part of the **AI & ML Month 1: Python and Maths** series and is shared for educational purposes.
-
----
+### Input prompt
 
 <p align="center">
-  Made with ❤️ during <b>AI & ML Month 01</b> — Day 02
+  <img src="screenshots/Screenshot1.png" alt="Word frequency analyzer input prompt" width="80%">
 </p>
+
+### Analysis output
+
+<p align="center">
+  <img src="screenshots/Screenshot2.png" alt="Word frequency report in the terminal" width="80%">
+</p>
+
+### Course banner
+
+<p align="center">
+  <img src="screenshots/banner.png" alt="AI and ML Month 1 course banner" width="80%">
+</p>
+
+---
+
+**Author:** [chetanaybuilder](https://github.com/chetanaybuilder) · AI & ML Month 01
