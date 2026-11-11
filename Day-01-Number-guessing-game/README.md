@@ -1,86 +1,111 @@
-<p align="center">
-  <img src="assets/banner.svg" alt="AI and ML Month 1: Python and Maths - Day 1" width="100%">
-</p>
+<div align="center">
 
-<p align="center">
-  <strong>A command-line Python project focused on program structure, state, and control flow.</strong>
-</p>
+# Number Guessing Game 🎯
 
-## Number Guessing Game
+> **A focused command-line project exploring input validation, game state, and control flow in Python.**
 
-A command-line game that generates a secret integer and gives the player five attempts to guess it. Each guess receives higher-or-lower feedback, and the secret number is shown when the round ends.
+![Python](https://img.shields.io/badge/Python-3.6%2B-blue?style=flat-square&logo=python&logoColor=white)
+![Dependencies](https://img.shields.io/badge/Dependencies-Standard%20Library-success?style=flat-square)
+![Project](https://img.shields.io/badge/AI%20%26%20ML%20Month%2001-Day%2001-purple?style=flat-square)
 
-## System Architecture
+</div>
 
-The project is intentionally implemented as a single Python module:
+---
 
-- `greet_user()` prints the game banner, collects the player's name, and introduces the attempt limit.
-- `play_game()` creates the round state, reads guesses, compares each guess with the secret number, and prints feedback.
-- The `__main__` guard starts the greeting and game when the file is run directly.
+## 🧭 Overview
 
-The secret number and attempt counter are local to the game function. `MAX_ATTEMPTS` is a module-level configuration value shared by the functions that need it.
+The Number Guessing Game selects a secret integer between 1 and 100 and gives the player five valid guesses. It validates numeric input and range, compares each accepted guess with the secret, and reports whether the guess is too high, too low, or correct. A correct guess is acknowledged, but the current round continues until all five valid guesses have been entered.
 
-## Core Mechanics
+The project is implemented in one Python file and uses only the standard library.
 
-1. Generate a random integer from 1 through 100.
-2. Read each player guess, require a whole number from 1 through 100, and reject invalid input without consuming an attempt.
-3. Compare the guess with the secret number and report whether it is lower, higher, or equal.
-4. Decrease the remaining-attempt count and display it.
-5. After the configured attempts, reveal the secret number.
+## 🏗️ System Architecture
 
-Guesses are appended to a local history list during the round. The list is not currently displayed or used in the game output.
-
-## Topics Mastered
-
-- **Environment setup:** Create and activate a `venv`, work in VS Code, and use Git to track project changes.
-- **Data types:** Use strings for player input and messages, integers for guesses and counters, and a list for guess history.
-- **Control flow:** Use a `while` loop and `if`/`elif`/`else` branches to manage attempts and provide feedback.
-- **Modular functions:** Separate the greeting from the round logic with `greet_user()` and `play_game()`.
-- **Variable scope (LEGB):** Resolve `MAX_ATTEMPTS` from module/global scope while keeping round values such as `secret_no` and `attempts_left` local to `play_game()`.
-- **In-place mutability:** `history.append(guess)` updates the existing list rather than creating a replacement list.
-
-## Local Setup
-
-Python 3 is required. The game uses only the Python standard library.
-
-Create a virtual environment from the project directory:
-
-```powershell
-python -m venv .venv
+```text
+[ Player Input ]
+       │
+       ▼
+[ Input Validation ] ──> Reject non-integers and values outside 1–100
+       │
+       ▼
+[ Game State ] ─────────> Secret number + remaining-attempt counter
+       │
+       ▼
+[ Guess Evaluation ] ───> Compare guess and provide feedback
+       │
+       ▼
+[ Terminal Output ] ────> Show remaining attempts and reveal the secret
 ```
 
-Activate it in PowerShell:
+The `__main__` guard starts the greeting and game when `Number.py` is run directly. `greet_user()` handles the welcome prompt; `play_game()` owns the secret number, attempt counter, and guess history for a round.
 
-```powershell
-.\.venv\Scripts\Activate.ps1
+## 📂 Project Structure
+
+```text
+Day-01-Number-guessing-game/
+├── Number.py                       # Game logic and command-line interface
+├── README.md                       # Project documentation
+└── assets/
+    ├── banner.svg                  # Project banner
+    ├── terminal-start.png          # Terminal startup screenshot
+    ├── terminal-start-preview.png  # Startup preview
+    ├── terminal-gameplay.png       # Gameplay screenshot
+    └── terminal-gameplay-preview.png
 ```
 
-On macOS or Linux:
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.6 or newer
+- No third-party packages
+
+### Run
+
+From this directory, execute:
 
 ```bash
-source .venv/bin/activate
-```
-
-Open the project folder in VS Code and select the `.venv` interpreter for the workspace. No additional packages are required.
-
-## Execution
-
-From the project directory, run:
-
-```powershell
 python Number.py
 ```
 
-If the virtual environment is not activated, use the Python interpreter available on your `PATH`.
+On Windows, `py Number.py` is also supported when the Python launcher is installed.
 
-## Terminal Screenshots
+## 💻 Core Implementation
+
+The game accepts only whole-number guesses in the supported range. Invalid input does not consume an attempt.
+
+```python
+try:
+    guess = int(input("Guess a number between 1 and 100: "))
+except ValueError:
+    print("Please enter a whole number.")
+    continue
+
+if not 1 <= guess <= 100:
+    print("Please enter a number between 1 and 100.")
+    continue
+
+if guess == secret_no:
+    print(f"Congratulations! You guessed {secret_no} correctly!")
+elif guess < secret_no:
+    print("Your guess is too low. Try again!")
+else:
+    print("Your guess is too high. Try again!")
+```
+
+## 💡 Engineering Takeaways
+
+- **Input validation:** Convert user input explicitly and handle conversion errors with a targeted `ValueError` handler.
+- **State ownership:** Keep the secret number, attempt count, and guess history local to the game function.
+- **Control flow:** Use a loop and conditional branches to manage attempts and compare values.
+- **Standard-library randomness:** Generate the secret integer with `random.randint()`.
+
+## 🖼️ Screenshots
 
 <p align="center">
-  <img src="assets/terminal-start-preview.png" alt="Terminal showing the game prompt" width="48%">
-  &nbsp;&nbsp;
-  <img src="assets/terminal-gameplay-preview.png" alt="Terminal showing a completed game" width="48%">
+  <img src="assets/terminal-start-preview.png" alt="Number guessing game startup in the terminal" width="48%">
+  <img src="assets/terminal-gameplay-preview.png" alt="Number guessing game interaction in the terminal" width="48%">
 </p>
 
 ---
 
-**Author:** chetanaybuilder · Future Founder
+**Author:** [chetanaybuilder](https://github.com/chetanaybuilder) · Future Founder
