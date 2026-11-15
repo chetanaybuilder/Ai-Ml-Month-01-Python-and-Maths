@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="90%">
+  <img src="../Day-07-rest-day/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="90%">
 </p>
 
 <h1 align="center">Bank Account Management with OOP</h1>

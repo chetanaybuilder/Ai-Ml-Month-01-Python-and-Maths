@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="90%">
+  <img src="readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="90%">
 </p>
 
 <h1 align="center">Day 07 — Rest, Review, and Consolidation</h1>
