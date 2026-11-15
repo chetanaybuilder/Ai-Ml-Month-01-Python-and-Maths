@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="100%">
+  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="90%">
 </p>
 
 <h1 align="center">Log File Parser and JSON Reporter</h1>
