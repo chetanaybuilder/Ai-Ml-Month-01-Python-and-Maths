@@ -94,5 +94,6 @@ The next stage of the learning journey can build on these foundations with furth
 
 ## Project Information
 
-Part of the **AI/ML Month 1 — Python and Core Mathematics** learning series.  
+Part of the **AI/ML Month 1 — Python and Core Mathematics** learning series.
+
 Author: [chetanaybuilder](https://github.com/chetanaybuilder)
