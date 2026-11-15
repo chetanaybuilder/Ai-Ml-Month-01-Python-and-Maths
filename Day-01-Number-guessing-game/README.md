@@ -1,111 +1,94 @@
-<div align="center">
+![AI/ML Month 1: Python and Core Mathematics](../assets/readme-banner.png)
 
-# Number Guessing Game 🎯
+# Number Guessing Game
 
-> **A focused command-line project exploring input validation, game state, and control flow in Python.**
+A small command-line game that demonstrates validated input, bounded attempts, and conditional feedback in Python.
 
-![Python](https://img.shields.io/badge/Python-3.6%2B-blue?style=flat-square&logo=python&logoColor=white)
-![Dependencies](https://img.shields.io/badge/Dependencies-Standard%20Library-success?style=flat-square)
-![Project](https://img.shields.io/badge/AI%20%26%20ML%20Month%2001-Day%2001-purple?style=flat-square)
+## Overview
 
-</div>
+The program chooses a secret integer from 1 through 100 and gives the player five valid guesses. After each accepted guess, it reports whether the value is too low, too high, or correct.
 
----
+## Purpose
 
-## 🧭 Overview
+This project is an exercise in translating a simple game loop into Python: collect input, reject invalid values, update state, and provide feedback.
 
-The Number Guessing Game selects a secret integer between 1 and 100 and gives the player five valid guesses. It validates numeric input and range, compares each accepted guess with the secret, and reports whether the guess is too high, too low, or correct. A correct guess is acknowledged, but the current round continues until all five valid guesses have been entered.
+## Features
 
-The project is implemented in one Python file and uses only the standard library.
+- Generates an inclusive random integer from 1 to 100.
+- Allows five in-range integer guesses.
+- Rejects non-integer and out-of-range input without consuming an attempt.
+- Reports the remaining attempt count after each valid guess.
 
-## 🏗️ System Architecture
+## Core Concepts
 
-```text
-[ Player Input ]
-       │
-       ▼
-[ Input Validation ] ──> Reject non-integers and values outside 1–100
-       │
-       ▼
-[ Game State ] ─────────> Secret number + remaining-attempt counter
-       │
-       ▼
-[ Guess Evaluation ] ───> Compare guess and provide feedback
-       │
-       ▼
-[ Terminal Output ] ────> Show remaining attempts and reveal the secret
-```
+- `random.randint()` for random integer selection.
+- Functions for separating the greeting from a game round.
+- `try`/`except` input conversion and loop control.
+- Conditional branches and a counter to track game state.
+- The `if __name__ == "__main__"` entry-point guard.
 
-The `__main__` guard starts the greeting and game when `Number.py` is run directly. `greet_user()` handles the welcome prompt; `play_game()` owns the secret number, attempt counter, and guess history for a round.
+## Technology Stack
 
-## 📂 Project Structure
+- Python 3.6 or later
+- Python standard library only; no third-party packages
+
+## Project Structure
 
 ```text
 Day-01-Number-guessing-game/
-├── Number.py                       # Game logic and command-line interface
-├── README.md                       # Project documentation
+├── Number.py
+├── README.md
 └── assets/
-    ├── banner.svg                  # Project banner
-    ├── terminal-start.png          # Terminal startup screenshot
-    ├── terminal-start-preview.png  # Startup preview
-    ├── terminal-gameplay.png       # Gameplay screenshot
-    └── terminal-gameplay-preview.png
+    ├── terminal-gameplay-preview.png
+    ├── terminal-gameplay.png
+    ├── terminal-start-preview.png
+    └── terminal-start.png
 ```
 
-## 🚀 Quick Start
+## Installation and Setup
 
-### Prerequisites
+Install Python 3.6 or later. No package installation or virtual environment is required.
 
-- Python 3.6 or newer
-- No third-party packages
+## How to Run
 
-### Run
+From this project directory:
 
-From this directory, execute:
-
-```bash
+```console
 python Number.py
 ```
 
-On Windows, `py Number.py` is also supported when the Python launcher is installed.
+On Windows, `py Number.py` also works when the Python launcher is installed.
 
-## 💻 Core Implementation
+## Usage
 
-The game accepts only whole-number guesses in the supported range. Invalid input does not consume an attempt.
+Enter a name at the greeting prompt, then enter whole-number guesses between 1 and 100. Invalid entries are rejected and the program asks for another guess.
 
-```python
-try:
-    guess = int(input("Guess a number between 1 and 100: "))
-except ValueError:
-    print("Please enter a whole number.")
-    continue
+## Implementation Notes
 
-if not 1 <= guess <= 100:
-    print("Please enter a number between 1 and 100.")
-    continue
+`greet_user()` prints the welcome message. `play_game()` creates the secret number, tracks the remaining attempts, and evaluates each valid guess. The game uses a new secret number each time it starts.
 
-if guess == secret_no:
-    print(f"Congratulations! You guessed {secret_no} correctly!")
-elif guess < secret_no:
-    print("Your guess is too low. Try again!")
-else:
-    print("Your guess is too high. Try again!")
-```
+## Error Handling and Limitations
 
-## 💡 Engineering Takeaways
+The input loop handles non-integer values and integers outside the accepted range. A correct guess is acknowledged, but does not end the round early: the player can continue guessing until all five valid attempts have been used. The program then prints the game-over message and reveals the secret number.
 
-- **Input validation:** Convert user input explicitly and handle conversion errors with a targeted `ValueError` handler.
-- **State ownership:** Keep the secret number, attempt count, and guess history local to the game function.
-- **Control flow:** Use a loop and conditional branches to manage attempts and compare values.
-- **Standard-library randomness:** Generate the secret integer with `random.randint()`.
+## Testing
 
-## 🖼️ Screenshots
+No automated test files are included in this project.
 
-<p align="center">
-  <img src="assets/terminal-start-preview.png" alt="Number guessing game startup in the terminal" width="48%">
-  <img src="assets/terminal-gameplay-preview.png" alt="Number guessing game interaction in the terminal" width="48%">
-</p>
+## Learning Outcomes
 
----
+- Validate interactive input before using it.
+- Keep state for one game round inside the function that owns that round.
+- Use a loop and conditional branches to express repeated game behavior.
 
-**Author:** [chetanaybuilder](https://github.com/chetanaybuilder) · Future Founder
+## Future Improvements
+
+- End the round immediately after a correct guess.
+- Add automated tests by injecting the secret number and input/output dependencies.
+- Offer a replay option without restarting the script.
+
+## Project Information
+
+Part of the AI/ML Month 1 Python and Core Mathematics learning series.
+
+Author: [chetanaybuilder](https://github.com/chetanaybuilder)
