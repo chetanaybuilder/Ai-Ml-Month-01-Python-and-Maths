@@ -1,37 +1,86 @@
-![AI/ML Month 1: Python and Core Mathematics](../assets/readme-banner.png)
+<p align="center">
+  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="100%">
+</p>
 
-# Bank Account Management with OOP
+<h1 align="center">Bank Account Management with OOP</h1>
 
-A runnable Python example of encapsulating account data and basic transactions in a class.
+<p align="center">
+  A small in-memory model demonstrating class design, transaction validation, and Python special methods.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.6%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.6 or later">
+  <img src="https://img.shields.io/badge/Design-Object--Oriented-4F46E5?style=flat-square" alt="Object-oriented design">
+  <img src="https://img.shields.io/badge/Month%2001-Day%2004-6D5BD0?style=flat-square" alt="Month 01, Day 04">
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> ·
+  <a href="#what-i-learned">Learning</a> ·
+  <a href="#setup-and-run">Run</a> ·
+  <a href="#engineering-takeaways">Takeaways</a>
+</p>
+
+---
 
 ## Overview
 
-`main.py` defines `BankAccount` and runs a short demonstration. The class stores an account holder's name and balance, supports deposits and withdrawals, and implements selected Python special methods.
+[`main.py`](main.py) defines a `BankAccount` class with a holder name and balance, then runs a fixed demonstration with two sample accounts. The project is an educational example; it does not persist accounts or implement real banking controls.
 
-## Purpose
+## What I Learned
 
-The example focuses on object-oriented design and validation around simple state-changing operations. It is an in-memory programming exercise, not a banking system.
+### Learning Progress
+
+**Day 04 — Object-Oriented Programming**
+
+This project applies classes and instance state to a concrete domain example. It also explores how special methods connect custom objects to Python's built-in operations and representations.
+
+### What I Built
+
+I implemented the `BankAccount` class with:
+
+- An initializer that rejects negative opening balances.
+- `deposit()` and `withdraw()` methods with transaction validation.
+- `__str__` and `__repr__` for display and debugging.
+- `__eq__` to compare account-holder names and `__len__` to return the holder-name length.
+
+The entry point demonstrates a deposit followed by a withdrawal and prints the updated balance.
+
+### Engineering Takeaways
+
+1. Put state-changing rules close to the state they protect.
+2. Special methods should have clear, documented semantics; here equality means same holder name, not identical account state.
+3. Raise a specific exception when an operation violates an invariant.
+4. Use this example as a learning model, not as a financial implementation.
 
 ## Features
 
-- Creates an account with a non-negative initial balance.
-- Supports positive deposits and withdrawals that do not exceed the balance.
-- Provides readable and debugging representations of account objects.
-- Compares accounts by holder name and exposes the name length through `len()`.
-- Demonstrates transactions with two sample account instances.
+| Method or behavior | Contract |
+|---|---|
+| `BankAccount(name, balance)` | Rejects an initial balance below zero |
+| `deposit(amount)` | Requires a positive amount |
+| `withdraw(amount)` | Requires a positive amount no greater than the balance |
+| `str(account)` | Displays the holder and formatted balance |
+| `account_a == account_b` | Compares holder names |
+| `len(account)` | Returns the number of characters in the holder name |
 
-## Core Concepts
+## Object Model
 
-- Class and instance state.
-- Encapsulation of operations and validation in instance methods.
-- Special methods: `__str__`, `__repr__`, `__eq__`, and `__len__`.
-- Exceptions for invalid balances and transactions.
-- A guarded command-line entry point.
-
-## Technology Stack
-
-- Python 3.6 or later
-- Python standard library only; no third-party packages
+```mermaid
+classDiagram
+    class BankAccount {
+        +name: str
+        +balance: float
+        +deposit(amount)
+        +withdraw(amount)
+        +__str__()
+        +__repr__()
+        +__eq__(other)
+        +__len__()
+    }
+    BankAccount : validates opening balance
+    BankAccount : rejects invalid transactions
+```
 
 ## Project Structure
 
@@ -41,23 +90,17 @@ Day-04-Bank-Account-Management-OOP/
 └── README.md
 ```
 
-## Installation and Setup
+## Setup and Run
 
-Install Python 3.6 or later. No package installation or virtual environment is required.
-
-## How to Run
-
-From this project directory:
+Requirements: Python 3.6 or later. No package installation is required.
 
 ```console
 python main.py
 ```
 
-On Windows, `py main.py` also works when the Python launcher is installed.
+Run the command from this project directory. On Windows, `py main.py` also works if the Python launcher is installed.
 
-## Usage
-
-The script runs a fixed demonstration. The class can also be imported from another Python file:
+## Reuse the Class
 
 ```python
 from main import BankAccount
@@ -68,36 +111,26 @@ account.withdraw(100.0)
 print(account)
 ```
 
-## Sample Output
+## Verified Demonstration
 
-The demonstration initializes Alex's balance at `$5,000.00`, deposits `$500.00`, and withdraws `$200.00`. The resulting balance is `$5,300.00`.
-
-## Implementation Notes
-
-`__eq__` defines equality using only the account holder's name, while `__len__` returns the number of characters in that name. Balances are held as Python numeric values and formatted as USD for display.
+The fixed example starts Alex at `$5,000.00`, deposits `$500.00`, and withdraws `$200.00`. The displayed final balance is `$5,300.00`.
 
 ## Error Handling and Limitations
 
-The constructor rejects a negative initial balance. `deposit()` and `withdraw()` reject non-positive amounts, and `withdraw()` also rejects an amount greater than the current balance; these conditions raise `ValueError`. Account state is held only in memory. The example uses floating-point balances and does not model real financial requirements.
+Invalid opening balances and transaction amounts raise `ValueError`; withdrawing more than the current balance also raises `ValueError`. Balances are stored in memory as floating-point numbers, which are not a suitable default for precise financial arithmetic. There is no persistence, authentication, transaction history, or concurrency handling.
 
 ## Testing
 
 No automated test files are included in this project.
 
-## Learning Outcomes
-
-- Group related data and behavior in a class.
-- Use special methods to integrate objects with Python's built-in operations.
-- Define validation rules at the operations that modify state.
-
 ## Future Improvements
 
-- Add unit tests for valid transactions and each validation failure.
-- Use `decimal.Decimal` for monetary arithmetic.
-- Separate the reusable class from the demonstration entry point.
+- Add unit tests for normal transactions and every validation condition.
+- Use `decimal.Decimal` for monetary values.
+- Separate the reusable class from the demonstration in `main.py`.
 
 ## Project Information
 
-Part of the AI/ML Month 1 Python and Core Mathematics learning series.
+Part of the **AI/ML Month 1 — Python and Core Mathematics** learning series.
 
 Author: [chetanaybuilder](https://github.com/chetanaybuilder)

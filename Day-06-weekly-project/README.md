@@ -1,37 +1,80 @@
-![AI/ML Month 1: Python and Core Mathematics](../assets/readme-banner.png)
+<p align="center">
+  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="100%">
+</p>
 
-# Study Tracker
+<h1 align="center">Study Tracker</h1>
 
-A command-line application for recording study sessions in JSON and summarizing study time by subject.
+<p align="center">
+  A terminal application for recording study sessions and summarizing study time by subject.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.10 or later">
+  <img src="https://img.shields.io/badge/Storage-JSON-4F46E5?style=flat-square" alt="JSON file storage">
+  <img src="https://img.shields.io/badge/Month%2001-Week%2001%20Project-6D5BD0?style=flat-square" alt="Month 01, Week 01 project">
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> ·
+  <a href="#what-i-learned">Learning</a> ·
+  <a href="#setup-and-run">Run</a> ·
+  <a href="#engineering-takeaways">Takeaways</a>
+</p>
+
+---
 
 ## Overview
 
-The tracker provides a terminal menu to add sessions, view saved records, and calculate aggregate statistics. Session data is persisted locally in `data/session.json`; no database service is required.
+The Study Tracker provides a menu to add study sessions, list saved records, and view summary statistics. It stores records in `data/session.json`; its modules separate the terminal interface, operations, statistics, and file storage.
 
-## Purpose
+## What I Learned
 
-This weekly project brings together a small command-line interface, separated application modules, JSON file persistence, and automated tests.
+### Learning Progress
+
+**Week 01 Project — Applying Month 01 Python Fundamentals**
+
+This project combines the month's foundations in a small multi-module application: functions, input handling, dictionaries, JSON serialization, file paths, and tests around file-backed behavior.
+
+### What I Built
+
+I implemented a menu-driven tracker that:
+
+- Accepts subject, chapter, date text, and integer duration for a session.
+- Adds and lists session dictionaries stored in JSON.
+- Calculates session count, total minutes, and totals by subject.
+- Uses temporary files and patched paths in tests to avoid changing the real data file.
+
+`main.py` presents the menu; `trackers/operation.py` manages records; `trackers/statistics.py` aggregates values; and `trackers/storage.py` handles JSON persistence.
+
+### Engineering Takeaways
+
+1. Small modules with focused responsibilities make behavior easier to understand and test.
+2. Use temporary files when testing persistence to isolate tests from user data.
+3. Resolve application data paths consistently so execution location does not change storage location.
+4. Treat data validation and storage failures as explicit product decisions, not incidental details.
 
 ## Features
 
-- Adds a session with a subject, chapter, date string, and duration in minutes.
-- Lists previously saved sessions.
-- Reports session count, total minutes, and minutes grouped by subject.
-- Persists session records in a local JSON file.
-- Includes tests for adding, retrieving, and summarizing session data.
+| Area | Behavior |
+|---|---|
+| Add session | Stores subject, chapter, date string, and integer duration |
+| View sessions | Displays saved records |
+| Statistics | Reports number of sessions, total minutes, and minutes by subject |
+| Persistence | JSON file at `data/session.json` |
+| Tests | Add, retrieve, and statistics behavior |
 
-## Core Concepts
+## Architecture
 
-- Separating CLI, operations, statistics, and storage responsibilities.
-- Reading and writing JSON with `pathlib` and context-managed files.
-- Aggregating records using dictionaries and counters.
-- Testing with `unittest`, temporary files, and `unittest.mock.patch`.
-
-## Technology Stack
-
-- Python 3.10 or later (as specified by this project)
-- Runtime logic uses the Python standard library.
-- `requirements.txt` lists pytest; the checked-in tests use the standard-library `unittest` runner.
+```mermaid
+flowchart TD
+    A[main.py: terminal menu] --> B[trackers/operation.py]
+    A --> C[trackers/statistics.py]
+    B --> D[trackers/storage.py]
+    C --> D
+    D <--> E[data/session.json]
+    F[tests/test_operation.py] --> B
+    F --> C
+```
 
 ## Project Structure
 
@@ -53,11 +96,9 @@ Day-06-weekly-project/
 └── requirements.txt
 ```
 
-`main.py` handles prompts and presentation. `trackers/operation.py` adds and retrieves records, `trackers/statistics.py` calculates totals, and `trackers/storage.py` reads and writes the JSON file.
+## Setup and Run
 
-## Installation and Setup
-
-From this project directory, create and activate a virtual environment and install the listed dependency:
+Requires Python 3.10 or later, as specified by this project. Create and activate a virtual environment, then install the dependency listed in `requirements.txt`:
 
 ```powershell
 python -m venv .venv
@@ -65,37 +106,29 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-On macOS or Linux, activate the environment with:
+On macOS or Linux, activate with:
 
 ```sh
 source .venv/bin/activate
 ```
 
-The application itself uses only the standard library; pytest is listed in the requirements file.
-
-## How to Run
-
-From this project directory:
+Run from this project directory:
 
 ```console
 python main.py
 ```
 
-Choose `1` to add a session, `2` to view sessions, `3` for statistics, or `4` to exit.
+Select `1` to add a session, `2` to list sessions, `3` for statistics, or `4` to exit.
 
-## Usage
+## Data and Implementation Notes
 
-When adding a session, provide a subject, chapter, date string, and an integer duration in minutes. The date prompt requests `YYYY-MM-DD`, but the application stores the supplied string without validating the date format.
+The storage module resolves the JSON file relative to the project root. Each saved record contains `subject`, `date`, `duration`, and `chapter`. Statistics convert the stored duration to an integer and sum durations by subject.
 
-The statistics view reports the count and total minutes for all records in `data/session.json`, along with totals grouped by subject.
-
-## Implementation Notes
-
-The storage module resolves `data/session.json` relative to the project location, not the current working directory. Session records are dictionaries containing `subject`, `date`, `duration`, and `chapter`. Statistics convert each duration to an integer and sum values by subject.
+The date prompt asks for `YYYY-MM-DD`, but the application stores the provided string without validating the format. Duration input must parse as an integer, but zero and negative values are currently accepted.
 
 ## Error Handling and Limitations
 
-The CLI rejects non-integer durations and empty subject, chapter, or date fields. It does not reject zero or negative durations and does not validate date formats. The storage loader returns an empty list when the file is absent, empty, malformed, unreadable, or contains a JSON value other than a list; this can make a storage problem appear like an empty tracker. Save errors are not caught by the storage layer.
+The storage loader returns an empty list if the file is absent, empty, malformed, unreadable, or contains a JSON value other than a list. Consequently, a data problem can appear as an empty tracker. Save errors are not caught by the storage layer.
 
 ## Testing
 
@@ -105,23 +138,17 @@ Run the existing standard-library tests from this project directory:
 python -m unittest discover -s tests -v
 ```
 
-The tests cover adding a record, reading saved records, and calculating total and per-subject statistics using temporary files.
-
-## Learning Outcomes
-
-- Split an application into modules with distinct responsibilities.
-- Persist structured records using JSON and `pathlib`.
-- Test file-backed behavior without changing the project's real data file.
+The tests cover adding, reading, and summarizing records using temporary files and patched storage paths. `requirements.txt` lists pytest, but the checked-in tests use `unittest`.
 
 ## Future Improvements
 
-- Validate date strings and require positive durations.
-- Report malformed or unreadable storage explicitly instead of treating it as empty.
-- Add tests for invalid input and storage edge cases.
-- Provide a backup or export workflow for the session data.
+- Validate dates and require positive study durations.
+- Surface invalid or unreadable JSON instead of treating it as an empty session list.
+- Add tests for invalid input, storage failures, and edge cases.
+- Add export or backup support for saved sessions.
 
 ## Project Information
 
-Part of the AI/ML Month 1 Python and Core Mathematics learning series.
+Part of the **AI/ML Month 1 — Python and Core Mathematics** learning series.
 
 Author: [chetanaybuilder](https://github.com/chetanaybuilder)

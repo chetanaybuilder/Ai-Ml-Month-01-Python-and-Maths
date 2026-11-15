@@ -1,97 +1,135 @@
-![AI/ML Month 1: Python and Core Mathematics](../assets/readme-banner.png)
+<p align="center">
+  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="100%">
+</p>
 
-# Word Frequency Analyzer
+<h1 align="center">Word Frequency Analyzer</h1>
 
-A dependency-free command-line script that normalizes a paragraph and reports the frequency of each word.
+<p align="center">
+  A compact text-processing pipeline for normalizing a paragraph and counting its words.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.6%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.6 or later">
+  <img src="https://img.shields.io/badge/Dependencies-Standard%20Library-4F46E5?style=flat-square" alt="Standard library only">
+  <img src="https://img.shields.io/badge/Month%2001-Day%2002-6D5BD0?style=flat-square" alt="Month 01, Day 02">
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> ·
+  <a href="#what-i-learned">Learning</a> ·
+  <a href="#setup-and-run">Run</a> ·
+  <a href="#engineering-takeaways">Takeaways</a>
+</p>
+
+---
 
 ## Overview
 
-The analyzer reads one paragraph from standard input, removes ASCII punctuation, lowercases the text, and splits it on whitespace. It prints each word's count in alphabetical order, followed by total and unique token counts.
+The analyzer reads a paragraph from standard input, removes ASCII punctuation, converts text to lowercase, and splits it on whitespace. It prints each word's frequency in alphabetical order, then reports total and unique word counts.
 
-## Purpose
+## What I Learned
 
-This project demonstrates a compact text-processing pipeline using Python's string utilities, whitespace tokenization, and dictionary-based counting.
+### Learning Progress
+
+**Day 02 — Strings, Normalization, and Dictionaries**
+
+This project builds on basic Python execution by introducing a small data-processing pipeline: transform a string, tokenize it, aggregate repeated values, and format a report.
+
+### What I Built
+
+I implemented [`text_analyzer.py`](text_analyzer.py), a single-script analyzer that:
+
+- Reads one paragraph with `input()`.
+- Removes characters listed in `string.punctuation` and lowercases the text.
+- Splits the normalized string into whitespace-delimited tokens.
+- Counts words in a dictionary and prints the counts alphabetically.
+
+The total count is the number of tokens after normalization; the unique count is the number of dictionary keys.
+
+### Engineering Takeaways
+
+1. Normalize data consistently before comparing or aggregating it.
+2. A dictionary provides a direct representation for word-to-count mappings.
+3. Sorting at presentation time gives deterministic, readable output.
+4. Tokenization and punctuation policies affect the meaning of the result.
 
 ## Features
 
-- Accepts a paragraph entered at the terminal.
-- Removes characters listed in `string.punctuation` and normalizes case.
-- Counts tokens and prints their frequencies in sorted order.
-- Reports total token count and the number of unique tokens.
+| Stage | Implementation |
+|---|---|
+| Input | One paragraph from the terminal |
+| Normalization | Delete ASCII punctuation; lowercase |
+| Tokenization | Whitespace splitting |
+| Aggregation | Dictionary counts |
+| Report | Alphabetical frequencies, total tokens, unique tokens |
 
-## Core Concepts
+## Architecture
 
-- `str.translate()` and `str.maketrans()` for punctuation removal.
-- `str.lower()` and `str.split()` for normalization and tokenization.
-- Dictionary accumulation with `dict.get()`.
-- Sorting dictionary items to produce stable, readable output.
-
-## Technology Stack
-
-- Python 3.6 or later
-- Python standard library only; no third-party packages
+```mermaid
+flowchart LR
+    A[Paragraph input] --> B[Delete ASCII punctuation]
+    B --> C[Lowercase]
+    C --> D[Split on whitespace]
+    D --> E[Count in dictionary]
+    E --> F[Sort words]
+    F --> G[Print frequency report]
+```
 
 ## Project Structure
 
 ```text
 Day-02-Word-Frequency-Analyzer/
 ├── text_analyzer.py
-├── README.md
-└── screenshots/
-    ├── Screenshot1.png
-    └── Screenshot2.png
+└── README.md
 ```
 
-## Installation and Setup
+## Setup and Run
 
-Install Python 3.6 or later. No package installation or virtual environment is required.
+Requirements: Python 3.6 or later. No virtual environment or package installation is required.
 
-## How to Run
-
-From this project directory:
+Run from this project directory:
 
 ```console
 python text_analyzer.py
 ```
 
-On Windows, `py text_analyzer.py` also works when the Python launcher is installed.
+On Windows, `py text_analyzer.py` also works if the Python launcher is installed.
 
-## Usage
+## Example
 
-At the prompt, enter a paragraph. For example:
+Input:
 
 ```text
 Python is useful. Python is readable.
 ```
 
-The script reports normalized word counts and the total and unique token counts.
+Output:
 
-## Implementation Notes
-
-All processing is performed in `text_analyzer.py`. Punctuation is removed before lowercasing and splitting; the resulting words are counted in a dictionary and sorted alphabetically for display.
+```text
+is: 2
+python: 2
+readable: 1
+useful: 1
+Total words: 6
+Unique words: 4
+```
 
 ## Error Handling and Limitations
 
-The script has no custom error handling for terminal input. Punctuation handling follows Python's ASCII `string.punctuation` constant, not a Unicode-aware tokenizer. Punctuation is deleted rather than treated as a separator, so text such as `well-known` becomes `wellknown`; an empty input produces zero total and unique words.
+There is no custom input error handling. Punctuation handling uses Python's ASCII `string.punctuation`, not a Unicode-aware tokenizer. Punctuation is deleted rather than replaced with whitespace, so `well-known` becomes `wellknown`. Empty input produces zero tokens and zero unique words.
 
 ## Testing
 
 No automated test files are included in this project.
 
-## Learning Outcomes
-
-- Apply a sequence of normalization steps before analyzing text.
-- Count repeated values using a dictionary.
-- Separate data processing from the ordering used for presentation.
-
 ## Future Improvements
 
-- Add a testable function that accepts text and returns a report.
+- Extract normalization and counting into a function that can be unit tested.
 - Define Unicode punctuation and tokenization behavior explicitly.
-- Support input from a text file as well as a terminal prompt.
+- Support reading text from a file in addition to terminal input.
 
 ## Project Information
 
-Part of the AI/ML Month 1 Python and Core Mathematics learning series.
+Part of the **AI/ML Month 1 — Python and Core Mathematics** learning series.
 
 Author: [chetanaybuilder](https://github.com/chetanaybuilder)

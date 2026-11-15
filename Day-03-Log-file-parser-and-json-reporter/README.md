@@ -1,37 +1,74 @@
-![AI/ML Month 1: Python and Core Mathematics](../assets/readme-banner.png)
+<p align="center">
+  <img src="../assets/readme-banner.png" alt="AI/ML Month 1 — Python and Core Mathematics" width="100%">
+</p>
 
-# Log File Parser and JSON Reporter
+<h1 align="center">Log File Parser and JSON Reporter</h1>
 
-A standard-library command-line utility that counts selected log-level markers and writes a JSON summary.
+<p align="center">
+  A standard-library utility that counts selected log markers and exports a structured JSON summary.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.6%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.6 or later">
+  <img src="https://img.shields.io/badge/Output-JSON-4F46E5?style=flat-square" alt="JSON output">
+  <img src="https://img.shields.io/badge/Month%2001-Day%2003-6D5BD0?style=flat-square" alt="Month 01, Day 03">
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> ·
+  <a href="#what-i-learned">Learning</a> ·
+  <a href="#setup-and-run">Run</a> ·
+  <a href="#engineering-takeaways">Takeaways</a>
+</p>
+
+---
 
 ## Overview
 
-`main.py` reads `app.log` from the current working directory, counts lines containing `INFO`, `WARNING`, or `ERROR`, collects lines classified as errors, and writes the result to `summary.json`.
+[`main.py`](main.py) reads `app.log` from the current working directory, classifies lines containing `INFO`, `WARNING`, or `ERROR`, collects error lines, and writes the counts and messages to `summary.json`.
 
-## Purpose
+## What I Learned
 
-This project demonstrates basic file processing, conditional classification, aggregation, and JSON serialization for a small offline report.
+### Learning Progress
+
+**Day 03 — File Processing and Structured Data**
+
+This project moves from in-memory string processing to reading a line-oriented file, aggregating records, and serializing the result as JSON.
+
+### What I Built
+
+I implemented a log summarizer that:
+
+- Reads UTF-8 input with a context manager.
+- Counts log-level markers in one pass over the lines.
+- Retains full lines classified as errors.
+- Writes an indented JSON report with `json.dump()`.
+- Prints a user-facing message when `app.log` is missing.
+
+### Engineering Takeaways
+
+1. Context managers make file-handle lifetime explicit and reliable.
+2. A single pass is sufficient for these simple counters and collected messages.
+3. JSON provides a portable, inspectable representation for aggregated data.
+4. Define what a “total record” means: this program counts physical lines, including blank lines.
 
 ## Features
 
-- Reads UTF-8 log text using a context manager.
-- Counts `INFO`, `WARNING`, and `ERROR` markers.
-- Includes the full matching error lines in the report.
-- Writes an indented JSON document to `summary.json`.
-- Prints a message when the input file cannot be found.
+| Input | Processing | Output |
+|---|---|---|
+| `app.log` in the working directory | Substring checks for `INFO`, `WARNING`, `ERROR` | `summary.json` |
+| UTF-8 text | One category per line through an `if`/`elif` chain | Counts and full error lines |
 
-## Core Concepts
+## Architecture
 
-- File input/output with explicit text encoding.
-- Single-pass iteration and counter-based aggregation.
-- Conditional classification and list accumulation.
-- JSON serialization using the standard library.
-- Targeted handling of a missing input file.
-
-## Technology Stack
-
-- Python 3.6 or later
-- Python standard library only; no third-party packages
+```mermaid
+flowchart LR
+    A[app.log] --> B[Read UTF-8 lines]
+    B --> C[Check INFO / WARNING / ERROR]
+    C --> D[Accumulate counters and error lines]
+    D --> E[Build summary dictionary]
+    E --> F[Write summary.json]
+```
 
 ## Project Structure
 
@@ -40,71 +77,52 @@ Day-03-Log-file-parser-and-json-reporter/
 ├── app.log
 ├── main.py
 ├── README.md
-├── summary.json
-└── screenshots/
-    ├── json-summary.png
-    └── terminal-run.png
+└── summary.json
 ```
 
-`summary.json` is the included report file; a successful run replaces it.
+## Setup and Run
 
-## Installation and Setup
+Requirements: Python 3.6 or later. The script uses only the standard library.
 
-Install Python 3.6 or later. No package installation or virtual environment is required. Keep `app.log` in the project directory.
-
-## How to Run
-
-Run the command from this project directory so the relative input and output paths resolve as intended:
+Run from this project directory; the script uses paths relative to the current working directory:
 
 ```console
 python main.py
 ```
 
-On Windows, `py main.py` also works when the Python launcher is installed.
+On Windows, `py main.py` also works if the Python launcher is installed.
 
-## Usage
+## Verified Sample Results
 
-The script processes the bundled `app.log` without additional prompts. After a successful run, inspect `summary.json` for the counts and error lines.
+The included `app.log` has **29 physical lines**, including blank lines. Its checked-in report contains:
 
-## Sample Results
-
-The checked-in `app.log` and `summary.json` contain this report:
-
-| Report field | Value |
+| Field | Value |
 |---|---:|
-| `Total_logs` (physical lines, including blank lines) | 29 |
+| `Total_logs` | 29 |
 | `INFO_logs` | 7 |
 | `WARNING_logs` | 3 |
 | `ERROR_logs` | 5 |
 
-The JSON report also contains the five error lines.
+The output also includes the five full lines classified as errors.
 
-## Implementation Notes
+## Implementation Details and Limitations
 
-The parser uses substring checks rather than a formal log format or regular expression. It tests `INFO`, then `WARNING`, then `ERROR` with an `if`/`elif` chain; at most one category is counted per physical line. `Total_logs` is the number of lines returned by `readlines()`, including blank lines.
+Classification uses substring matching rather than parsing a formal log schema. Because it uses `if`/`elif`, a line containing more than one marker is counted in the first matching category. `Total_logs` counts every physical line returned by `readlines()`, not only non-empty or recognized records.
 
-## Error Handling and Limitations
-
-If `app.log` is missing, the script prints a message and does not create a report. Other file errors are not handled explicitly. The script assumes it is launched from the project directory and overwrites `summary.json` on each successful run.
+The script handles `FileNotFoundError`; other file errors are not explicitly caught. A successful run replaces the existing `summary.json`.
 
 ## Testing
 
 No automated test files are included in this project.
 
-## Learning Outcomes
-
-- Process line-oriented input and aggregate values in one pass.
-- Use context managers to manage file handles.
-- Serialize structured results as human-readable JSON.
-
 ## Future Improvements
 
-- Resolve input and output paths relative to `main.py` rather than the current directory.
-- Parse structured log levels instead of matching arbitrary substrings.
-- Add automated tests for missing files, empty files, and classification edge cases.
+- Resolve paths relative to `main.py` rather than the shell's current directory.
+- Parse structured levels instead of matching arbitrary substrings.
+- Add tests for empty input, missing files, and lines with multiple markers.
 
 ## Project Information
 
-Part of the AI/ML Month 1 Python and Core Mathematics learning series.
+Part of the **AI/ML Month 1 — Python and Core Mathematics** learning series.
 
 Author: [chetanaybuilder](https://github.com/chetanaybuilder)
