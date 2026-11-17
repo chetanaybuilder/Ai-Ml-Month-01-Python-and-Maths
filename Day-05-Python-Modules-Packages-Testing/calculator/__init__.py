@@ -1,0 +1,1 @@
+"""Basic arithmetic operations for the calculator application."""

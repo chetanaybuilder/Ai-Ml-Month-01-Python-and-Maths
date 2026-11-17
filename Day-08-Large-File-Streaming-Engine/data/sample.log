@@ -1,0 +1,32 @@
+# Synthetic sample log for local development and demonstration.
+# Lines beginning with "#" are metadata and are ignored by the processor.
+2026-11-16 09:00:01 INFO Application started successfully
+2026-11-16 09:00:05 INFO Loading configuration settings
+2026-11-16 09:00:08 INFO Database connection established
+2026-11-16 09:00:12 INFO Server running on port 5000
+2026-11-16 09:01:20 INFO User admin logged in successfully
+2026-11-16 09:02:15 INFO API request received: GET /users
+2026-11-16 09:02:16 INFO API request completed with status 200
+2026-11-16 09:03:10 WARNING High memory usage detected: 78%
+2026-11-16 09:04:22 INFO New user registered successfully
+2026-11-16 09:05:30 WARNING Failed login attempt for user guest
+2026-11-16 09:06:45 INFO File uploaded successfully: report.pdf
+2026-11-16 09:07:12 ERROR Database query failed: Connection timeout
+2026-11-16 09:07:20 INFO Database reconnection successful
+2026-11-16 09:08:05 WARNING API response time exceeded 3 seconds
+2026-11-16 09:09:18 INFO Background task started
+2026-11-16 09:10:30 ERROR File not found: config.json
+2026-11-16 09:11:42 INFO Cache cleared successfully
+2026-11-16 09:12:15 WARNING Disk space running low: 15% remaining
+2026-11-16 09:13:27 INFO Email notification sent successfully
+2026-11-16 09:14:39 ERROR Authentication token expired
+2026-11-16 09:15:50 INFO User session refreshed
+2026-11-16 09:16:05 WARNING Multiple requests detected from same IP
+2026-11-16 09:17:22 INFO Scheduled backup started
+2026-11-16 09:18:33 ERROR Backup operation failed: Permission denied
+2026-11-16 09:19:40 INFO Backup retry initiated
+2026-11-16 09:20:55 INFO Backup completed successfully
+2026-11-16 09:21:10 WARNING CPU usage reached 85%
+2026-11-16 09:22:25 ERROR External API returned status 500
+2026-11-16 09:23:40 INFO External API connection restored
+2026-11-16 09:24:00 INFO Application shutdown initiated
