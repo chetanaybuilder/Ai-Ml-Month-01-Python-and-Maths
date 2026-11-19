@@ -1,0 +1,17 @@
+Student_ID,Name,Class,Subject,Marks,Attendance
+101, Aman ,11A,Maths,90,95
+102,Riya,11A,Maths,,88
+103,Rahul,11B,Physics,85,92
+104,Karan,11A,Chemistry,75,80
+105,Priya,11B,Physics,110,90
+106,Aman,11A,Maths,90,95
+107,Neha ,11B,Maths,78,
+108, Arjun,11A,Physics,82,85
+109,Simran,11B,Chemistry,NA,91
+110,Rohit,11A,Maths,67,75
+111,Meera,11B,Physics,88,105
+112, Kabir ,11A,Chemistry,92,89
+113,Isha,11B,Maths,81,87
+114,Dev,11A,Physics,-5,79
+115,Ananya,11B,Chemistry,94,96
+116,Riya,11A,Maths, ,88
