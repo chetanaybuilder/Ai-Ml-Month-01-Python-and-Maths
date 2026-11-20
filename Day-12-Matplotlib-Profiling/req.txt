@@ -1,0 +1,3 @@
+# Day-12-Matplotlib-Profiling Dependencies
+# Core visualization library
+matplotlib>=3.7.0

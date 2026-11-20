@@ -1,0 +1,7 @@
+Maths,85
+Physics,78
+Chemistry,92
+English,88
+Biology,81
+Computer Science,95
+Economics,76
