@@ -1,0 +1,5 @@
+# Day-18-Calculus Dependencies
+# Gradient Verification Project
+
+# Core numerical computing library
+numpy==1.26.4
